@@ -36,11 +36,13 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="bg-[url('/Home.svg')] w-full min-h-screen bg-center py-16 px-4 md:px-16">
-      <h2 className="text-3xl font-bold mb-2 text-white text-center md:text-left">Bog'lanish</h2>
+    <section className="bg-[url('/Home.svg')] bg-cover bg-center w-full min-h-screen py-16 px-4 md:px-16">
+      <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white text-center md:text-left">
+        Bog'lanish
+      </h2>
       <div className="w-24 border-b-4 border-blue-600 mb-10 mx-auto md:mx-0"></div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
         {[
           {
             icon: "/gmail.svg",
@@ -50,7 +52,14 @@ const ContactSection = () => {
           {
             icon: "/telegram.svg",
             title: "Telegram",
-            content: <Link href="https://t.me/nizomov_official" className="hover:text-blue-400 underline">t.me/nizomov_official</Link>,
+            content: (
+              <Link
+                href="https://t.me/nizomov_official"
+                className="hover:text-blue-400 underline"
+              >
+                t.me/nizomov_official
+              </Link>
+            ),
           },
           {
             icon: "/phone.svg",
@@ -60,7 +69,7 @@ const ContactSection = () => {
         ].map((item, index) => (
           <div
             key={index}
-            className="bg-gradient-to-br from-[#111] to-[#0e0e0e] p-10 rounded-2xl text-center shadow-xl hover:scale-105 transition-transform duration-300"
+            className="bg-gradient-to-br from-[#111] to-[#0e0e0e] p-8 md:p-10 rounded-2xl text-center shadow-xl hover:scale-105 transition-transform duration-300"
           >
             <Image
               src={item.icon}
@@ -69,19 +78,23 @@ const ContactSection = () => {
               height={40}
               className="mx-auto mb-4"
             />
-            <h4 className="font-semibold text-white text-lg mb-1">{item.title}</h4>
-            <p className="text-gray-400">{item.content}</p>
+            <h4 className="font-semibold text-white text-lg mb-1">
+              {item.title}
+            </h4>
+            <p className="text-gray-400 break-words">{item.content}</p>
           </div>
         ))}
       </div>
 
-      <h2 className="text-3xl font-bold mb-2 text-white text-center md:text-left">So‘rov yuborish</h2>
+      <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white text-center md:text-left">
+        So‘rov yuborish
+      </h2>
       <div className="w-24 border-b-4 border-blue-600 mb-8 mx-auto md:mx-0"></div>
 
       <form
         ref={form}
         onSubmit={sendEmail}
-        className="bg-gradient-to-br from-[#111] to-[#0e0e0e] p-8 rounded-2xl space-y-6 shadow-2xl"
+        className="bg-gradient-to-br from-[#111] to-[#0e0e0e] p-6 md:p-8 rounded-2xl space-y-6 shadow-2xl max-w-4xl mx-auto"
       >
         <div className="flex flex-col md:flex-row gap-4">
           <input
