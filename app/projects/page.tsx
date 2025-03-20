@@ -13,6 +13,7 @@ export default function page() {
           quality={100}
         />
       </div>
+      
     </div>
   );
 }
