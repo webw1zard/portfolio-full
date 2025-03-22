@@ -27,7 +27,7 @@ export default function About() {
         Mening vazifam veb saytni foydalanuvchilarga qulay, sayt dizayni
         foydalanuvchilarga jalb qiluvchi lekin ayni paytda tezkor bo‘lishini
         ta'minlashdir va saytni moslashuvchan kodlar bilan yaratishdir!
-      </p>
+      </p>  
       <p className="mb-6">
         Agar sizga men yaratgan loyihalarim qiziq bo‘lsa{" "}
         <Link
