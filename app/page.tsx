@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
         }
 
         .animate-shine {
-          content: '';
+          content: "";
           background: linear-gradient(
             120deg,
             rgba(255, 255, 255, 0) 0%,

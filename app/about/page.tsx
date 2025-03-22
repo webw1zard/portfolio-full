@@ -1,9 +1,37 @@
+"use client";
+
+import { createClient } from "@/supabase/client";
 import Image from "next/image";
-import Link from "next/link";
+import { useEffect, useState, useCallback } from "react";
 
 export default function About() {
-  const tools: string[] = [];
-  const clients: string[] = [];
+  const [tools, setTools] = useState<string[]>([]);
+  const [clients, setClients] = useState<string[]>([]);
+  const supabase = createClient();
+
+  const fetchData = useCallback(async () => {
+    try {
+      const { data: toolsData, error: toolsError } = await supabase
+        .from("tools")
+        .select("image_url");
+
+      const { data: clientsData, error: clientsError } = await supabase
+        .from("clients")
+        .select("image_url");
+
+      if (toolsError) console.error(toolsError);
+      if (clientsError) console.error(clientsError);
+
+      if (toolsData) setTools(toolsData.map((t) => t.image_url));
+      if (clientsData) setClients(clientsData.map((c) => c.image_url));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [supabase]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <div className="bg-black/1000 text-white px-6 md:px-20 py-16 relative">
@@ -11,43 +39,35 @@ export default function About() {
         <Image
           src="/Home.svg"
           alt="background"
-          layout="fill"
-          objectFit="cover"
-          className="opacity-100"
+          fill
+          className="object-cover "
         />
       </div>
 
       <h2 className="text-3xl font-bold mb-4 text-blue-500">Men haqimda</h2>
+      <div className="w-48 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-6"></div>
+
       <p className="mb-4">
-        Men Nizomov Ulug'bek veb dasturchisiman. Yoshim 16 da, Buxoro viloyati
-        Kogon Shahrida tug‘ilganman. Qiziqarli, ko‘p funksionallikka ega bo‘lgan
-        va kuchli dizaynga ega bo‘lgan dasturlar yaratishga qiziqaman.
+        Men Nizomov Ulug'bek, tajribali veb dasturchiman. Mening maqsadim –
+        zamonaviy va samarali veb yechimlar yaratish orqali biznes va shaxsiy
+        loyihalarga qo‘shimcha qiymat qo‘shishdir. Frontend va backend
+        sohalarida tajribam katta va men har doim o‘sishga va yangiliklarni
+        o‘rganishga tayyorman.
       </p>
       <p className="mb-4">
-        Mening vazifam veb saytni foydalanuvchilarga qulay, sayt dizayni
-        foydalanuvchilarga jalb qiluvchi lekin ayni paytda tezkor bo‘lishini
-        ta'minlashdir va saytni moslashuvchan kodlar bilan yaratishdir!
-      </p>  
-      <p className="mb-6">
-        Agar sizga men yaratgan loyihalarim qiziq bo‘lsa{" "}
-        <Link
-          href={"/projects"}
-          className="text-blue-500 underline cursor-pointer"
-        >
-          Loyihalar
-        </Link>{" "}
-        sahifasiga tashrif buyurishingiz mumkin :)
+        Ish jarayonida doimo mijozlarim ehtiyojlarini tinglab, ularga
+        moslashgan, innovatsion va estetik jihatdan mukammal mahsulotlar taqdim
+        etaman.
       </p>
-      <Link
-        href={"/contact"}
-        className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md text-white font-semibold transition "
-      >
-        Bog‘lanish
-      </Link>
 
       <h2 className="text-2xl font-bold mb-4 text-blue-500 mt-6">
         Asbob-uskunalar
       </h2>
+      <div className="w-48 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-6"></div>
+      <p className="mb-4">
+        Quyida men faoliyatimda muntazam qo‘llaydigan texnologiyalar va
+        asbob-uskunalar ro‘yxati keltirilgan:
+      </p>
       <div className="grid grid-cols-3 md:grid-cols-5 gap-6 mb-16">
         {tools.length > 0 ? (
           tools.map((tool, idx) => (
@@ -68,49 +88,48 @@ export default function About() {
       <h2 className="text-2xl font-bold mb-4 text-blue-500">
         Men nimalar qila olaman
       </h2>
+      <div className="w-48 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-6"></div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-        <div className="bg-[#0e0e0e] p-4 rounded-lg flex items-start gap-4">
-          <Image src="/seo.svg" alt="seo" width={50} height={50} />
+        <div className="bg-[#0e0e0e] p-6 rounded-lg hover:scale-105 transition flex gap-4 items-center">
+          <Image src="/seo.svg" alt="Seo" width={50} height={50} />
           <div>
-            <h4 className="font-semibold text-lg mb-2 text-white">Seo</h4>
-            <p className="text-gray-400">
-              Qidiruv tizimining natijalarida sayt reytingini yaxshilash
-            </p>
+            <h3 className="text-xl font-semibold mb-2 text-blue-400">Seo</h3>
+            <p>Qidiruv tizimining natijalarida sayt reytingini yaxshilash.</p>
           </div>
         </div>
 
-        <div className="bg-[#0e0e0e] p-4 rounded-lg flex items-start gap-4">
-          <Image src="/diz.svg" alt="dizayn" width={50} height={50} />
+        <div className="bg-[#0e0e0e] p-6 rounded-lg hover:scale-105 transition flex gap-4 items-center">
+          <Image src="/diz.svg" alt="Design" width={50} height={50} />
           <div>
-            <h4 className="font-semibold text-lg mb-2 text-white">Dizayn</h4>
-            <p className="text-gray-400">
-              Kuchli dizayn va kichik detallargacha e'tibor berish
-            </p>
+            <h3 className="text-xl font-semibold mb-2 text-blue-400">Dizayn</h3>
+            <p>Kuchli dizayn va kichik detallarga e’tibor berish.</p>
           </div>
         </div>
 
-        <div className="bg-[#0e0e0e] p-4 rounded-lg flex items-start gap-4">
-          <Image src="/quality.svg" alt="sifat" width={50} height={50} />
+        <div className="bg-[#0e0e0e] p-6 rounded-lg hover:scale-105 transition flex gap-4 items-center">
+          <Image src="/quality.svg" alt="Sifat" width={50} height={50} />
           <div>
-            <h4 className="font-semibold text-lg mb-2 text-white">Sifat</h4>
-            <p className="text-gray-400">
-              Yuqori darajada saytlarni sifatli ishlab chiqish
-            </p>
+            <h3 className="text-xl font-semibold mb-2 text-blue-400">Sifat</h3>
+            <p>Yuqori darajada saytlarni sifatli ishlab chiqish.</p>
           </div>
         </div>
 
-        <div className="bg-[#0e0e0e] p-4 rounded-lg flex items-start gap-4">
-          <Image src="/speed.svg" alt="tezkorlik" width={50} height={50} />
+        <div className="bg-[#0e0e0e] p-6 rounded-lg hover:scale-105 transition flex gap-4 items-center">
+          <Image src="/speed.svg" alt="Tezkorlik" width={50} height={50} />
           <div>
-            <h4 className="font-semibold text-lg mb-2 text-white">Tezkorlik</h4>
-            <p className="text-gray-400">
-              Qisqa muddat ichida tezkor sayt ishlab chiqish
-            </p>
+            <h3 className="text-xl font-semibold mb-2 text-blue-400">
+              Tezkorlik
+            </h3>
+            <p>Qisqa muddat ichida tezkor sayt ishlab chiqish.</p>
           </div>
         </div>
       </div>
 
       <h2 className="text-2xl font-bold mb-4 text-blue-500">Mijozlar</h2>
+      <div className="w-48 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-6"></div>
+      <p className="mb-4">
+        Mening xizmatlarimdan mamnun bo‘lgan va hamkorlik qilgan mijozlarim:
+      </p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {clients.length > 0 ? (
           clients.map((client, idx) => (

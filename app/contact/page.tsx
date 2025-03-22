@@ -40,8 +40,7 @@ const ContactSection = () => {
       <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white text-center md:text-left">
         Bog'lanish
       </h2>
-      <div className="w-24 border-b-4 border-blue-600 mb-10 mx-auto md:mx-0"></div>
-
+      <div className="w-36 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-8"></div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
         {[
           {
@@ -89,7 +88,7 @@ const ContactSection = () => {
       <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white text-center md:text-left">
         So‘rov yuborish
       </h2>
-      <div className="w-24 border-b-4 border-blue-600 mb-8 mx-auto md:mx-0"></div>
+      <div className="w-36 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-8"></div>
 
       <form
         ref={form}
