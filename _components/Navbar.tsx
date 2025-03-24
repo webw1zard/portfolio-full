@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <Link href="/">
             <Image
-              src="/Logo.jpg"
+              src="/logo.jpg"
               alt="Logo"
               width={50}
               height={50}
