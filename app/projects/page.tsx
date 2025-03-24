@@ -16,7 +16,7 @@ export default function Projects() {
       .order("id", { ascending: false });
 
     if (error) {
-      console.error("Supabase Error:", error);
+      console.error(error);
     } else {
       setProjects(data);
     }
