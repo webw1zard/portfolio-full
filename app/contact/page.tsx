@@ -38,7 +38,7 @@ const ContactSection = () => {
   return (
     <section className="bg-[url('/Home.svg')] bg-cover bg-center w-full min-h-screen py-16 px-4 md:px-16">
       <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white text-center md:text-left">
-        Bog'lanish
+        Bog`lanish
       </h2>
       <div className="w-36 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-8"></div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">

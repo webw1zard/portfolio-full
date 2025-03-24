@@ -48,7 +48,7 @@ export default function About() {
       <div className="w-48 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-6"></div>
 
       <p className="mb-4">
-        Men Nizomov Ulug'bek, tajribali veb dasturchiman. Mening maqsadim –
+        Men Nizomov Ulug`bek, tajribali veb dasturchiman. Mening maqsadim –
         zamonaviy va samarali veb yechimlar yaratish orqali biznes va shaxsiy
         loyihalarga qo‘shimcha qiymat qo‘shishdir. Frontend va backend
         sohalarida tajribam katta va men har doim o‘sishga va yangiliklarni

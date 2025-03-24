@@ -4,9 +4,18 @@ import { createClient } from "@/supabase/client";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image_url: string;
+  position: string;
+  link: string;
+  tools: Array<string>;
+}
 
 export default function Projects() {
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const supabase = createClient();
 
   const fetchProjects = useCallback(async () => {

@@ -21,7 +21,7 @@ export default function Home() {
         <h1 className="text-4xl md:text-6xl font-bold mb-4 relative inline-block">
           Assalomu alaykum, Men <br />
           <span className="text-blue-500 relative animate-glow">
-            Nizomov Ulug'bek
+            Nizomov Ulug`bek
             <span className="absolute left-0 top-0 w-full h-full animate-shine"></span>
           </span>
         </h1>
