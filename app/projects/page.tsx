@@ -5,13 +5,14 @@ import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 interface Project {
-  id: number;
+  id: string;
   title: string;
-  description: string;
+  description?: string;
   image_url: string;
-  position: string;
-  link: string;
-  tools: Array<string>;
+  status: "Yuqori" | "Past" | "Boshqa";
+  tags: string[];
+  category: string;
+  project_url: string;
 }
 
 export default function Projects() {
@@ -61,14 +62,14 @@ export default function Projects() {
                 className="object-cover"
               />
               <div className="absolute top-2 left-2 bg-gradient-to-r from-red-600 to-pink-500 text-white text-xs px-2 py-1 rounded shadow-md">
-                {project.position}
+                {project.status}
               </div>
             </div>
 
             <div className="p-5 space-y-3">
               <h3 className="font-semibold text-xl">{project.title}</h3>
               <div className="flex flex-wrap gap-2">
-                {project.tools.map((tool: string, idx: number) => (
+                {project.tags.map((tool: string, idx: number) => (
                   <span
                     key={idx}
                     className="text-xs bg-gradient-to-br from-[#1e1e1e] to-[#333] px-2 py-1 rounded text-gray-300 border border-[#444]"
@@ -78,9 +79,9 @@ export default function Projects() {
                 ))}
               </div>
 
-              {project.link && (
+              {project.project_url && (
                 <Link
-                  href={project.link}
+                  href={project.project_url}
                   target="_blank"
                   className="text-sm text-blue-400 hover:underline inline-block mt-2"
                 >
