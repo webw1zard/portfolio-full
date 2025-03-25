@@ -82,7 +82,6 @@ const Navbar = () => {
           ))}
         </div>
       )}
-
       <style jsx>{`
         @keyframes fadeIn {
           from {

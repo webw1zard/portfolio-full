@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "f0rest",
+  title: "Ulug`bek Nizomov",
   description: "f0rest's personal website",
 };
 
