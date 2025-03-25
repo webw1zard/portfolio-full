@@ -1,10 +1,10 @@
 "use client";
 import { createClient } from "@/supabase/client";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const supabase = createClient();
-type Project = {
+interface Project {
   id: string;
   title: string;
   description?: string;
@@ -13,7 +13,7 @@ type Project = {
   tags: string[];
   category: string;
   project_url: string;
-};
+}
 
 const Page = () => {
   const [newProject, setNewProject] = useState<Partial<Project>>({ tags: [] });
@@ -22,6 +22,16 @@ const Page = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+  const [selected, setSelected] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const route = e.target.value;
+    setSelected(route);
+    if (route) {
+      router.push(route);
+    }
+  };
 
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
   const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
@@ -50,7 +60,6 @@ const Page = () => {
       return;
     }
 
-    // Rasmni projects-images bucketiga yuklash
     const filePath = `projects-images/${Date.now()}-${imageFile.name}`;
     const { error: uploadError } = await supabase.storage
       .from("projects-images")
@@ -62,13 +71,11 @@ const Page = () => {
       return;
     }
 
-    // Rasmning public URL sini olish
     const { data: urlData } = supabase.storage
       .from("projects-images")
       .getPublicUrl(filePath);
     const imageUrl = urlData.publicUrl;
 
-    // Ma'lumotlar bazasiga loyihani qo'shish
     const { error } = await supabase
       .from("projects")
       .insert([{ ...newProject, image_url: imageUrl }]);
@@ -92,53 +99,52 @@ const Page = () => {
 
   if (isLoggedIn) {
     return (
-      <div className="p-6 bg-black min-h-screen text-[#39FF14]">
-        <h1 className="text-2xl font-bold bg-black p-4">Xush kelibsiz, Admin!</h1>
-        <div className="flex flex-col gap-6">
-          <div className="bg-[#111] rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-bold mb-5">Loyiha qo‘shish 🚀</h2>
-            <input type="text" placeholder="Sarlavha" value={newProject.title || ""} 
-              onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
-              className="w-full p-2 bg-gray-800 text-white rounded"
-            />
-            <input type="text" placeholder="Loyiha URL" value={newProject.project_url || ""}
-              onChange={(e) => setNewProject({ ...newProject, project_url: e.target.value })}
-              className="w-full p-2 bg-gray-800 text-white rounded"
-            />
-            <select value={newProject.status || ""} 
-              onChange={(e) => setNewProject({ ...newProject, status: e.target.value as "Yuqori" | "Past" | "Boshqa" })}
-              className="w-full p-2 bg-gray-800 text-white rounded"
-            >
-              <option value="">Status tanlang</option>
-              <option value="Yuqori">Yuqori</option>
-              <option value="Past">Past</option>
-              <option value="Boshqa">Boshqa</option>
-            </select>
-            <input type="file" onChange={handleImageUpload} className="w-full p-2 text-white" />
-            <button onClick={handleAddProject} className="w-full bg-[#39FF14] text-black py-2 mt-4 rounded">
-              Loyiha qo‘shish
-            </button>
-          </div>
-        </div>
+      <div className="w-full p-4 bg-blue-800">
+        <select
+          value={selected}
+          onChange={handleChange}
+          className="w-full p-3 rounded-lg bg-blue-700 text-white focus:outline-none appearance-none"
+        >
+          <option value="" disabled hidden>
+            Bo'limni tanlang
+          </option>
+          <option value="/admin/projects">Loyiha qo‘shish</option>
+          <option value="/admin/clients">Mijoz qo‘shish</option>
+          <option value="/admin/tools">Asbob-uskuna qo‘shish</option>
+        </select>
       </div>
     );
   }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-black p-4">
-      <form onSubmit={handleLogin} className="bg-[#121212] p-6 rounded-lg shadow-lg w-full max-w-md border border-[#39FF14]">
-        <h2 className="text-2xl font-bold text-[#39FF14] mb-4">Admin Kirish</h2>
+      <form
+        onSubmit={handleLogin}
+        className="bg-blue-500 p-6 rounded-lg shadow-lg w-full max-w-md border border-e-white"
+      >
+        <h2 className="text-2xl font-bold text-black mb-4">Admin Kirish</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="space-y-4">
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 rounded-md bg-[#1E1E1E] text-[#39FF14] border border-[#39FF14] focus:outline-none"
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 rounded-md bg-white text-black border border-e-white focus:outline-none"
             required
           />
-          <input type="password" placeholder="Parol" value={password} onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 rounded-md bg-[#1E1E1E] text-[#39FF14] border border-[#39FF14] focus:outline-none"
+          <input
+            type="password"
+            placeholder="Parol"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-2 rounded-md bg-white text-black border border-e-white focus:outline-none"
             required
           />
-          <button type="submit" className="w-full bg-[#39FF14] text-black py-2 rounded-md font-semibold hover:bg-[#2EDC12] transition">
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-black py-2 rounded-md font-semibold hover:bg-blue-900 transition"
+          >
             Kirish
           </button>
         </div>
