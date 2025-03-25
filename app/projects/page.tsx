@@ -4,6 +4,7 @@ import { createClient } from "@/supabase/client";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+
 interface Project {
   id: string;
   title: string;
@@ -17,24 +18,39 @@ interface Project {
 
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [filter, setFilter] = useState<string>("all");
   const supabase = createClient();
 
-  const fetchProjects = useCallback(async () => {
-    const { data, error } = await supabase
-      .from("projects")
-      .select("*")
-      .order("id", { ascending: false });
+  const fetchProjects = useCallback(
+    async (status?: string) => {
+      let query = supabase
+        .from("projects")
+        .select("*")
+        .order("id", { ascending: false });
 
-    if (error) {
-      console.error(error);
-    } else {
-      setProjects(data);
-    }
-  }, [supabase]);
+      if (status && status !== "all") {
+        query = query.eq("status", status);
+      }
+
+      const { data, error } = await query;
+      if (error) {
+        console.error(error);
+      } else {
+        setProjects(data);
+      }
+    },
+    [supabase]
+  );
 
   useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
+    fetchProjects(filter);
+  }, [fetchProjects, filter]);
+
+  const handleChangeSelectBox = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setFilter(event.target.value);
+  };
 
   return (
     <div
@@ -43,6 +59,22 @@ export default function Projects() {
         backgroundImage: "url('/Home.svg')",
       }}
     >
+      <div className="flex flex-col justify-between">
+        <div className="btn btn-dark w-[150px]">Filtrlash</div>
+        <div className="flex gap-4 items-center">
+          <select
+            name="state"
+            id="state"
+            className="select w-[150px]"
+            onChange={handleChangeSelectBox}
+          >
+            <option value="all">Barchasi</option>
+            <option value="Yuqori">Yuqori</option>
+            <option value="Past">Past</option>
+            <option value="Boshqa">Boshqa</option>
+          </select>
+        </div>
+      </div>
       <h2 className="text-3xl md:text-4xl text-blue-500 font-bold mb-4">
         Loyihalar
       </h2>
