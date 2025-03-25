@@ -79,7 +79,7 @@ const ProjectsPage = () => {
         />
       </div>
       <div>
-        <h1 className="text-3xl font-bold mb-4">Loyiha Qo'shish </h1>
+        <h1 className="text-3xl font-bold mb-4">Loyiha Qo`shish </h1>
         <div className="bg-blue-800 p-6 rounded-lg shadow-lg max-w-lg mx-auto">
           <input
             type="text"

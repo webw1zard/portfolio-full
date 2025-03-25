@@ -46,6 +46,7 @@ const Page = () => {
 
     setIsLoggedIn(true);
     setError("");
+    console.log(handleAddProject);
   };
 
   const handleAddProject = async () => {
@@ -87,6 +88,7 @@ const Page = () => {
       setNewProject({ tags: [] });
       setImageFile(null);
     }
+    console.log(handleImageUpload);
   };
 
   const handleImageUpload = async (
@@ -106,7 +108,7 @@ const Page = () => {
           className="w-full p-3 rounded-lg bg-blue-700 text-white focus:outline-none appearance-none"
         >
           <option value="" disabled hidden>
-            Bo'limni tanlang
+            Bo`limni tanlang
           </option>
           <option value="/admin/projects">Loyiha qo‘shish</option>
           <option value="/admin/clients">Mijoz qo‘shish</option>
