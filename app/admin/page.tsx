@@ -47,6 +47,8 @@ const Page = () => {
     localStorage.setItem("adminUlu", "true");
     setIsLoggedIn(true);
     setError("");
+    console.log(handleAddProject);
+    
   };
 
   const handleAddProject = async () => {
