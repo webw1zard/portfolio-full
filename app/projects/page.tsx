@@ -113,7 +113,7 @@ export default function Projects() {
 
               {project.project_url && (
                 <Link
-                  href={project.project_url}
+                  href={`https://github.com/${project.project_url}`}
                   target="_blank"
                   className="text-sm text-blue-400 hover:underline inline-block mt-2"
                 >
