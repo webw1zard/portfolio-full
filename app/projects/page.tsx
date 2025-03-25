@@ -19,7 +19,14 @@ interface Project {
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [filter, setFilter] = useState<string>("all");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const supabase = createClient();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsAdmin(localStorage.getItem("adminUlu") !== null);
+    }
+  }, []);
 
   const fetchProjects = useCallback(
     async (status?: string) => {
@@ -50,6 +57,16 @@ export default function Projects() {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setFilter(event.target.value);
+  };
+
+  const deleteProject = async (id: string) => {
+    if (!isAdmin) return;
+    const { error } = await supabase.from("projects").delete().eq("id", id);
+    if (error) {
+      console.error("Loyiha o‘chirishda xatolik:", error);
+    } else {
+      setProjects((prev) => prev.filter((p) => p.id !== id));
+    }
   };
 
   return (
@@ -119,6 +136,15 @@ export default function Projects() {
                 >
                   Loyihaga o‘tish →
                 </Link>
+              )}
+
+              {isAdmin && (
+                <button
+                  onClick={() => deleteProject(project.id)}
+                  className="mt-4 bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  O‘chirish
+                </button>
               )}
             </div>
           </div>
