@@ -93,8 +93,8 @@ const Page = () => {
       setImageFile(null);
       toast.success("Loyiha muvaffaqiyatli qo‘shildi!");
     }
-    console.log(handleAddProject);
   };
+  console.log(handleAddProject);
 
   const handleImageUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
