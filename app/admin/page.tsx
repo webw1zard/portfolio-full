@@ -93,7 +93,7 @@ const Page = () => {
       setImageFile(null);
       toast.success("Loyiha muvaffaqiyatli qo‘shildi!");
     }
-    console.log(handleAddProject, handleImageUpload);
+    console.log(handleAddProject);
   };
 
   const handleImageUpload = async (
@@ -103,6 +103,7 @@ const Page = () => {
     if (!file) return;
     setImageFile(file);
   };
+  console.log(handleImageUpload);
 
   return (
     <>
