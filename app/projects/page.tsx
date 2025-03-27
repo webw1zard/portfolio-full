@@ -63,7 +63,7 @@ export default function Projects() {
     if (!isAdmin) return;
     const { error } = await supabase.from("projects").delete().eq("id", id);
     if (error) {
-      console.error("Loyiha o‘chirishda xatolik:", error);
+      console.error(error);
     } else {
       setProjects((prev) => prev.filter((p) => p.id !== id));
     }

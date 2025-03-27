@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { createClient } from "@/supabase/client";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const supabase = createClient();
 
@@ -19,7 +21,7 @@ const ToolsPage = () => {
 
   const handleAddTool = async () => {
     if (!newTool.name || !newTool.tool_url || !imageFile) {
-      alert("Iltimos, barcha kerakli maydonlarni to'ldiring!");
+      toast.error("Iltimos, barcha kerakli maydonlarni to‘ldiring!");
       return;
     }
 
@@ -30,7 +32,7 @@ const ToolsPage = () => {
 
     if (uploadError) {
       console.error("Rasm yuklashda xatolik:", uploadError);
-      alert("Rasm yuklab bo‘lmadi!");
+      toast.error("Rasm yuklab bo‘lmadi!");
       return;
     }
 
@@ -45,11 +47,11 @@ const ToolsPage = () => {
 
     if (error) {
       console.error("Asbob qo‘shishda xatolik:", error);
-      alert("Asbob qo‘shishda xatolik yuz berdi!");
+      toast.error("Asbob qo‘shishda xatolik yuz berdi!");
     } else {
       setNewTool({});
       setImageFile(null);
-      alert("Asbob muvaffaqiyatli qo‘shildi!");
+      toast.success("Asbob muvaffaqiyatli qo‘shildi!");
     }
   };
 
@@ -61,13 +63,17 @@ const ToolsPage = () => {
 
   return (
     <div className="bg-black/1000 text-white px-6 md:px-20 py-48 relative">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        theme="colored"
+      />
       <div className="absolute inset-0 -z-10">
-        <Image
-          src="/Home.svg"
-          alt="background"
-          fill
-          className="object-cover "
-        />
+        <Image src="/Home.svg" alt="background" fill className="object-cover " />
       </div>
       <div>
         <h1 className="text-3xl font-bold mb-4">Asbob-uskuna qo‘shish</h1>

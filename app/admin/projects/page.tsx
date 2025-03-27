@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { createClient } from "@/supabase/client";
 import Image from "next/image";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const supabase = createClient();
 
@@ -28,7 +30,7 @@ const ProjectsPage = () => {
       !newProject.category ||
       !newProject.status
     ) {
-      alert("Iltimos, barcha kerakli maydonlarni to'ldiring!");
+      toast.error("Iltimos, barcha maydonlarni to‘ldiring!");
       return;
     }
 
@@ -39,7 +41,7 @@ const ProjectsPage = () => {
 
     if (uploadError) {
       console.error("Rasm yuklashda xatolik:", uploadError);
-      alert("Rasm yuklab bo‘lmadi!");
+      toast.error("Rasm yuklashda xatolik yuz berdi!");
       return;
     }
 
@@ -53,12 +55,12 @@ const ProjectsPage = () => {
       .insert([{ ...newProject, image_url: imageUrl }]);
 
     if (error) {
-      console.error("Loyihani qo‘shishda xatolik:", error);
-      alert("Loyihani qo‘shishda xatolik yuz berdi!");
+      console.error("Loyiha qo‘shishda xatolik:", error);
+      toast.error("Loyiha qo‘shishda xatolik yuz berdi!");
     } else {
       setNewProject({ tags: [] });
       setImageFile(null);
-      alert("Loyiha muvaffaqiyatli qo‘shildi!");
+      toast.success("✅ Loyiha muvaffaqiyatli qo‘shildi!");
     }
   };
 
@@ -70,16 +72,12 @@ const ProjectsPage = () => {
 
   return (
     <div className="bg-black/1000 text-white px-6 md:px-20 py-32 relative">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="absolute inset-0 -z-10">
-        <Image
-          src="/Home.svg"
-          alt="background"
-          fill
-          className="object-cover "
-        />
+        <Image src="/Home.svg" alt="background" fill className="object-cover" />
       </div>
       <div>
-        <h1 className="text-3xl font-bold mb-4">Loyiha Qo`shish </h1>
+        <h1 className="text-3xl font-bold mb-4">Loyiha Qo‘shish</h1>
         <div className="bg-blue-800 p-6 rounded-lg shadow-lg max-w-lg mx-auto">
           <input
             type="text"

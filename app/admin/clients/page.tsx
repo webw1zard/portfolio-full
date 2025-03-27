@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { createClient } from "@/supabase/client";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const supabase = createClient();
 
@@ -24,7 +26,7 @@ const ClientsPage = () => {
       !newClient.website ||
       !logoFile
     ) {
-      alert("Iltimos, barcha kerakli maydonlarni to'ldiring!");
+      toast.error("Iltimos, barcha maydonlarni to‘ldiring!");
       return;
     }
 
@@ -35,7 +37,7 @@ const ClientsPage = () => {
 
     if (uploadError) {
       console.error("Logo yuklashda xatolik:", uploadError);
-      alert("Logo yuklab bo‘lmadi!");
+      toast.error("Logo yuklab bo‘lmadi!");
       return;
     }
 
@@ -50,11 +52,11 @@ const ClientsPage = () => {
 
     if (error) {
       console.error("Mijoz qo‘shishda xatolik:", error);
-      alert("Mijoz qo‘shishda xatolik yuz berdi!");
+      toast.error("Mijoz qo‘shishda xatolik yuz berdi!");
     } else {
       setNewClient({});
       setLogoFile(null);
-      alert("Mijoz muvaffaqiyatli qo‘shildi!");
+      toast.success("✅ Mijoz muvaffaqiyatli qo‘shildi!");
     }
   };
 
@@ -66,6 +68,15 @@ const ClientsPage = () => {
 
   return (
     <div className="bg-black/1000 text-white px-6 md:px-20 py-48 relative">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnHover
+        theme="colored"
+      />
       <div className="absolute inset-0 -z-10">
         <Image
           src="/Home.svg"
